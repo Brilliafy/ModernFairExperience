@@ -105,8 +105,9 @@ tasks {
 
         filesMatching("fabric.mod.json") { expand(props) }
 
-        val mixinJava = "JAVA_${requiredJava.majorVersion}"
-        filesMatching("*.mixins.json") { expand("java" to mixinJava) }
+        val mixinJava = requiredJava.majorVersion
+        inputs.property("mixinJava", mixinJava)
+        filesMatching("mixins.*.json") { expand(mapOf("java" to mixinJava)) }
 
         exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
     }

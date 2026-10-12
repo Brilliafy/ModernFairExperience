@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_${java}",
   "refmap": "mixins.fairexperience.refmap.json",
   "mixins": [
+    "MixinAbstractContainerMenuAccessor",
+    "MixinItemCombinerMenuAccessor",
     "MixinEnchantmentMenu",
     "MixinPlayer",
     "MixinAnvilMenu"

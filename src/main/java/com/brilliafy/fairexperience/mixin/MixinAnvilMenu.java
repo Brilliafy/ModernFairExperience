@@ -42,15 +42,6 @@ import java.util.Set;
 public abstract class MixinAnvilMenu {
 
     @Shadow
-    protected Container inputSlots;
-
-    @Shadow
-    protected ResultContainer resultSlots;
-
-    @Shadow
-    protected Player player;
-
-    @Shadow
     public int repairItemCountCost;
 
     @Shadow
@@ -60,8 +51,30 @@ public abstract class MixinAnvilMenu {
     @Final
     private DataSlot cost;
 
-    @Shadow
-    public abstract void broadcastChanges();
+    @Unique
+    private MixinItemCombinerMenuAccessor fairExperience$access() {
+        return (MixinItemCombinerMenuAccessor) (Object) this;
+    }
+
+    @Unique
+    private Container fairExperience$inputSlots() {
+        return fairExperience$access().fairExperience$inputSlots();
+    }
+
+    @Unique
+    private ResultContainer fairExperience$resultSlots() {
+        return fairExperience$access().fairExperience$resultSlots();
+    }
+
+    @Unique
+    private Player fairExperience$player() {
+        return fairExperience$access().fairExperience$player();
+    }
+
+    @Unique
+    private void fairExperience$broadcastChanges() {
+        ((MixinAbstractContainerMenuAccessor) (Object) this).fairExperience$broadcastChanges();
+    }
 
     //? if <1.20.5 {
     /*@Unique
@@ -108,26 +121,26 @@ public abstract class MixinAnvilMenu {
 
         ci.cancel();
 
-        ItemStack itemstack = this.inputSlots.getItem(0);
+        ItemStack itemstack = fairExperience$inputSlots().getItem(0);
         this.cost.set(1);
         int i = 0;
         int j = 0; // Prior work penalty is zeroed out in fair mode
         int k = 0;
 
         if (itemstack.isEmpty()) {
-            this.resultSlots.setItem(0, ItemStack.EMPTY);
+            fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
             this.cost.set(0);
             return;
         }
 
         ItemStack itemstack1 = itemstack.copy();
-        ItemStack itemstack2 = this.inputSlots.getItem(1);
+        ItemStack itemstack2 = fairExperience$inputSlots().getItem(1);
         Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(itemstack1);
         this.repairItemCountCost = 0;
         boolean flag = false;
 
         //? if forge {
-        if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, itemstack, itemstack2, this.resultSlots, this.itemName, j, this.player)) {
+        if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, itemstack, itemstack2, fairExperience$resultSlots(), this.itemName, j, fairExperience$player())) {
             return;
         }
         //?}
@@ -138,7 +151,7 @@ public abstract class MixinAnvilMenu {
             if (itemstack1.isDamageableItem() && itemstack1.getItem().isValidRepairItem(itemstack, itemstack2)) {
                 int l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
                 if (l2 <= 0) {
-                    this.resultSlots.setItem(0, ItemStack.EMPTY);
+                    fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                     this.cost.set(0);
                     return;
                 }
@@ -156,7 +169,7 @@ public abstract class MixinAnvilMenu {
                 i += map.size();
             } else {
                 if (!flag && (!itemstack1.is(itemstack2.getItem()) || !itemstack1.isDamageableItem())) {
-                    this.resultSlots.setItem(0, ItemStack.EMPTY);
+                    fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                     this.cost.set(0);
                     return;
                 }
@@ -223,7 +236,7 @@ public abstract class MixinAnvilMenu {
                     }
 
                     if (anyIncompatible && !anyCompatible) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                         this.cost.set(0);
                         return;
                     }
@@ -237,7 +250,7 @@ public abstract class MixinAnvilMenu {
                     map = resultMap;
 
                     if (itemstack.getCount() > 1) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                         this.cost.set(0);
                         return;
                     }
@@ -257,7 +270,7 @@ public abstract class MixinAnvilMenu {
                         j2 = (i2 == j2) ? j2 + 1 : Math.max(j2, i2);
 
                         boolean flag1 = enchantment1.canEnchant(itemstack);
-                        if (this.player.getAbilities().instabuild || itemstack.is(Items.ENCHANTED_BOOK)) {
+                        if (fairExperience$player().getAbilities().instabuild || itemstack.is(Items.ENCHANTED_BOOK)) {
                             flag1 = true;
                         }
 
@@ -278,7 +291,7 @@ public abstract class MixinAnvilMenu {
                             targetMap.put(enchantment1, j2);
 
                             if (itemstack.getCount() > 1) {
-                                this.resultSlots.setItem(0, ItemStack.EMPTY);
+                                fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                                 this.cost.set(0);
                                 return;
                             }
@@ -286,7 +299,7 @@ public abstract class MixinAnvilMenu {
                     }
 
                     if (flag3 && !flag2) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                         this.cost.set(0);
                         return;
                     }
@@ -327,7 +340,7 @@ public abstract class MixinAnvilMenu {
             this.cost.set(39);
         }
 
-        if (!FairExperienceConfig.removeTooExpensiveLimit && this.cost.get() >= 40 && !this.player.getAbilities().instabuild) {
+        if (!FairExperienceConfig.removeTooExpensiveLimit && this.cost.get() >= 40 && !fairExperience$player().getAbilities().instabuild) {
             itemstack1 = ItemStack.EMPTY;
         }
 
@@ -342,8 +355,8 @@ public abstract class MixinAnvilMenu {
             EnchantmentHelper.setEnchantments(map, itemstack1);
         }
 
-        this.resultSlots.setItem(0, itemstack1);
-        this.broadcastChanges();
+        fairExperience$resultSlots().setItem(0, itemstack1);
+        fairExperience$broadcastChanges();
     }
 
     @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
@@ -401,7 +414,7 @@ public abstract class MixinAnvilMenu {
 
         ci.cancel();
 
-        ItemStack itemstack = this.inputSlots.getItem(0);
+        ItemStack itemstack = fairExperience$inputSlots().getItem(0);
         this.cost.set(1);
         int i = 0;
         long j = 0L; // Prior work penalty is zeroed out in fair mode
@@ -409,20 +422,20 @@ public abstract class MixinAnvilMenu {
 
         //? if >=1.20.5 && <1.21.2 && neoforge {
         if (!itemstack.isEmpty()) {
-            if (!net.neoforged.neoforge.common.CommonHooks.onAnvilChange((AnvilMenu) (Object) this, itemstack, this.inputSlots.getItem(1), this.resultSlots, this.itemName, j, this.player)) {
+            if (!net.neoforged.neoforge.common.CommonHooks.onAnvilChange((AnvilMenu) (Object) this, itemstack, fairExperience$inputSlots().getItem(1), fairExperience$resultSlots(), this.itemName, j, fairExperience$player())) {
                 return;
             }
         }
         //?}
 
         if (itemstack.isEmpty() || !EnchantmentHelper.canStoreEnchantments(itemstack)) {
-            this.resultSlots.setItem(0, ItemStack.EMPTY);
+            fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
             this.cost.set(0);
             return;
         }
 
         ItemStack itemstack1 = itemstack.copy();
-        ItemStack itemstack2 = this.inputSlots.getItem(1);
+        ItemStack itemstack2 = fairExperience$inputSlots().getItem(1);
         net.minecraft.world.item.enchantment.ItemEnchantments.Mutable mutable =
             new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(itemstack1));
         this.repairItemCountCost = 0;
@@ -440,7 +453,7 @@ public abstract class MixinAnvilMenu {
             if (repairsWithInput) {
                 int l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
                 if (l2 <= 0) {
-                    this.resultSlots.setItem(0, ItemStack.EMPTY);
+                    fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                     this.cost.set(0);
                     return;
                 }
@@ -457,7 +470,7 @@ public abstract class MixinAnvilMenu {
                 i += mutable.keySet().size();
             } else {
                 if (!flag && (!itemstack1.is(itemstack2.getItem()) || !itemstack1.isDamageableItem())) {
-                    this.resultSlots.setItem(0, ItemStack.EMPTY);
+                    fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                     this.cost.set(0);
                     return;
                 }
@@ -524,7 +537,7 @@ public abstract class MixinAnvilMenu {
                     }
 
                     if (anyIncompatible && !anyCompatible) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                         this.cost.set(0);
                         return;
                     }
@@ -540,7 +553,7 @@ public abstract class MixinAnvilMenu {
                     }
 
                     if (itemstack.getCount() > 1) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                         this.cost.set(0);
                         return;
                     }
@@ -560,7 +573,7 @@ public abstract class MixinAnvilMenu {
                         j2 = (i2 == j2) ? j2 + 1 : Math.max(j2, i2);
 
                         boolean flag1 = fairExperience$supports(itemstack, holder);
-                        if (this.player.getAbilities().instabuild) {
+                        if (fairExperience$player().getAbilities().instabuild) {
                             flag1 = true;
                         }
 
@@ -581,7 +594,7 @@ public abstract class MixinAnvilMenu {
                             targetMap.put(holder, j2);
 
                             if (itemstack.getCount() > 1) {
-                                this.resultSlots.setItem(0, ItemStack.EMPTY);
+                                fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                                 this.cost.set(0);
                                 return;
                             }
@@ -589,7 +602,7 @@ public abstract class MixinAnvilMenu {
                     }
 
                     if (flag3 && !flag2) {
-                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
                         this.cost.set(0);
                         return;
                     }
@@ -641,16 +654,16 @@ public abstract class MixinAnvilMenu {
             EnchantmentHelper.setEnchantments(itemstack1, mutable.toImmutable());
         }
 
-        this.resultSlots.setItem(0, itemstack1);
-        this.broadcastChanges();
+        fairExperience$resultSlots().setItem(0, itemstack1);
+        fairExperience$broadcastChanges();
     }
 
     @Unique
     private boolean fairExperience$hasInfiniteMaterials() {
         //? if <1.21.2 {
-        return this.player.getAbilities().instabuild;
+        return fairExperience$player().getAbilities().instabuild;
         //?} else {
-        /*return this.player.hasInfiniteMaterials();
+        /*return fairExperience$player().hasInfiniteMaterials();
         *///?}
     }
 
