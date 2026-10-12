@@ -38,6 +38,8 @@ dependencies {
     add("jarJar", "io.github.llamalad7:mixinextras-forge:0.5.5")
     // The jarJar'd copy is only inside the production jar, so dev runs need it on the classpath.
     runtimeOnly("io.github.llamalad7:mixinextras-forge:0.5.5")
+
+    testImplementation("junit:junit:4.13.2")
 }
 
 legacyForge {
