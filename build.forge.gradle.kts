@@ -36,6 +36,8 @@ dependencies {
     compileOnly("io.github.llamalad7:mixinextras-common:0.5.5")
     annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.5")
     add("jarJar", "io.github.llamalad7:mixinextras-forge:0.5.5")
+    // The jarJar'd copy is only inside the production jar, so dev runs need it on the classpath.
+    runtimeOnly("io.github.llamalad7:mixinextras-forge:0.5.5")
 }
 
 legacyForge {
@@ -99,8 +101,9 @@ tasks {
 
         filesMatching("META-INF/mods.toml") { expand(props) }
 
-        val mixinJava = "JAVA_${requiredJava.majorVersion}"
-        filesMatching("*.mixins.json") { expand("java" to mixinJava) }
+        val mixinJava = requiredJava.majorVersion
+        inputs.property("mixinJava", mixinJava)
+        filesMatching("mixins.*.json") { expand(mapOf("java" to mixinJava)) }
 
         // The Mixin annotation processor generates the real refmap for this jar.
         exclude("fabric.mod.json", "mixins." + modId + ".refmap.json", "META-INF/neoforge.mods.toml")
