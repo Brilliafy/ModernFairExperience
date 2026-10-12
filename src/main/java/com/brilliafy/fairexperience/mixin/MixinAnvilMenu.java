@@ -690,10 +690,17 @@ public abstract class MixinAnvilMenu {
      * Zeroes the prior-work penalty on the vanilla path too, so gear repaired with fair
      * anvils enabled never accumulates an ever-growing repair cost.
      */
+    //? if >=1.21.2 && neoforge {
+    @WrapOperation(
+        method = "createResultInternal",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I")
+    )
+    //?} else {
     @WrapOperation(
         method = "createResult",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I")
     )
+    //?}
     private int fairExperience$noPriorWorkPenalty(int repairCost, Operation<Integer> original) {
         if (FairExperienceConfig.enableFairAnvils) {
             return 0;

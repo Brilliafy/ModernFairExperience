@@ -27,3 +27,4 @@ Multi-version, multi-loader rewrite (Fabric + NeoForge + Forge from one Stonecut
 - MixinExtras (`@WrapOperation`) removes the prior-work penalty on the vanilla code path as well.
 - Parchment mappings for 1.20.1/1.21.1 dev names.
 - Automated Modrinth/CurseForge publishing via mod-publish-plugin on `v*` tags.
+- Unit tests for the XP maths run on every target.
