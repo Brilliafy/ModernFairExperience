@@ -1,0 +1,112 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PROJECTS: >-
+    1.20.1-fabric
+    1.20.1-forge
+    1.21.1-fabric
+    1.21.1-neoforge
+    26.3-fabric
+    26.3-neoforge
+
+jobs:
+  build:
+    name: Build ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # Sequential on purpose: Minecraft toolchains are RAM hungry and the
+      # machines this project is developed on cannot build the matrix in parallel.
+      max-parallel: 1
+      matrix:
+        project:
+          - 1.20.1-fabric
+          - 1.20.1-forge
+          - 1.21.1-fabric
+          - 1.21.1-neoforge
+          - 26.3-fabric
+          - 26.3-neoforge
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        run: ./gradlew --no-parallel --no-daemon :${{ matrix.project }}:build
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.project }}
+          path: versions/${{ matrix.project }}/build/libs/*.jar
+
+  publish:
+    name: Publish ${{ matrix.project }}
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        project:
+          - 1.20.1-fabric
+          - 1.20.1-forge
+          - 1.21.1-fabric
+          - 1.21.1-neoforge
+          - 26.3-fabric
+          - 26.3-neoforge
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish to Modrinth and CurseForge
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          CHANGELOG: ${{ github.event.head_commit.message }}
+        run: ./gradlew --no-parallel --no-daemon :${{ matrix.project }}:publishMods
+
+  release:
+    name: GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all jars
+        uses: actions/download-artifact@v4
+        with:
+          path: jars
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: jars/*.jar
+          generate_release_notes: true

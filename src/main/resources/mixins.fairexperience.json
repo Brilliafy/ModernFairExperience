@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.brilliafy.fairexperience.mixin",
+  "compatibilityLevel": "JAVA_${java}",
+  "refmap": "mixins.fairexperience.refmap.json",
+  "mixins": [
+    "MixinEnchantmentMenu",
+    "MixinPlayer",
+    "MixinAnvilMenu"
+  ],
+  "client": [
+    "MixinAnvilScreen"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
