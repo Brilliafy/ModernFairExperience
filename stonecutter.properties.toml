@@ -27,6 +27,10 @@ deps.fabric_api = "0.92.12+1.20.1"
 mod.mc_compat = "[1.20, 1.20.1]"
 deps.forge_loader = "47.4.26"
 
+[neoforge."1.20.1"]
+mod.mc_compat = "[1.20, 1.20.1]"
+deps.neo_loader = "47.1.106"
+
 
 ["1.21.1"]
 mod.mc_releases = ["1.21", "1.21.1"]

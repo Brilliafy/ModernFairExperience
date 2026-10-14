@@ -39,11 +39,13 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 }
 
+val modId: String = property("mod.id") as String
+
 neoForge {
     version = property("deps.neo_loader") as String
 
     mods {
-        register("template") {
+        register(modId) {
             sourceSet(sourceSets.main.get())
         }
     }
