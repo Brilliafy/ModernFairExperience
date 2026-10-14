@@ -1,12 +1,12 @@
 package com.brilliafy.fairexperience;
 
 //? if forge {
-import net.minecraftforge.common.ForgeConfigSpec;
+/*import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-/**
+/^*
  * Forge 1.20.1 config backend (TOML, {@code config/fairexperience-common.toml}).
- */
+ ^/
 public final class FairExperienceForgeConfig {
 
     public static final ForgeConfigSpec SPEC;
@@ -69,4 +69,4 @@ public final class FairExperienceForgeConfig {
         FairExperienceConfig.debugLogging = DEBUG_LOGGING.get();
     }
 }
-//?}
+*///?}

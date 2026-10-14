@@ -368,14 +368,14 @@ public abstract class MixinAnvilMenu {
     private static Map<net.minecraft.core.Holder<Enchantment>, Integer> fairExperience$toMap(net.minecraft.world.item.enchantment.ItemEnchantments enchantments) {
         Map<net.minecraft.core.Holder<Enchantment>, Integer> result = new LinkedHashMap<>();
         //? if <1.21.2 {
-        for (Map.Entry<net.minecraft.core.Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
+        /*for (Map.Entry<net.minecraft.core.Holder<Enchantment>, Integer> entry : enchantments.entrySet()) {
             result.put(entry.getKey(), entry.getValue());
         }
-        //?} else {
-        /*for (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<net.minecraft.core.Holder<Enchantment>> entry : enchantments.entrySet()) {
+        *///?} else {
+        for (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<net.minecraft.core.Holder<Enchantment>> entry : enchantments.entrySet()) {
             result.put(entry.getKey(), entry.getIntValue());
         }
-        *///?}
+        //?}
         return result;
     }
 
@@ -403,8 +403,8 @@ public abstract class MixinAnvilMenu {
     }
 
     //? if >=1.21.2 && neoforge {
-    @Inject(method = "createResultInternal", at = @At("HEAD"), cancellable = true)
-    //?} else {
+    /*@Inject(method = "createResultInternal", at = @At("HEAD"), cancellable = true)
+    *///?} else {
     @Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
     //?}
     private void fairExperience$createResult(CallbackInfo ci) {
@@ -421,12 +421,12 @@ public abstract class MixinAnvilMenu {
         int k = 0;
 
         //? if >=1.20.5 && <1.21.2 && neoforge {
-        if (!itemstack.isEmpty()) {
+        /*if (!itemstack.isEmpty()) {
             if (!net.neoforged.neoforge.common.CommonHooks.onAnvilChange((AnvilMenu) (Object) this, itemstack, fairExperience$inputSlots().getItem(1), fairExperience$resultSlots(), this.itemName, j, fairExperience$player())) {
                 return;
             }
         }
-        //?}
+        *///?}
 
         if (itemstack.isEmpty() || !EnchantmentHelper.canStoreEnchantments(itemstack)) {
             fairExperience$resultSlots().setItem(0, ItemStack.EMPTY);
@@ -445,10 +445,10 @@ public abstract class MixinAnvilMenu {
             flag = itemstack2.has(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS);
 
             //? if <1.21.2 {
-            boolean repairsWithInput = itemstack1.isDamageableItem() && itemstack1.getItem().isValidRepairItem(itemstack, itemstack2);
-            //?} else {
-            /*boolean repairsWithInput = itemstack1.isDamageableItem() && itemstack.isValidRepairItem(itemstack2);
-            *///?}
+            /*boolean repairsWithInput = itemstack1.isDamageableItem() && itemstack1.getItem().isValidRepairItem(itemstack, itemstack2);
+            *///?} else {
+            boolean repairsWithInput = itemstack1.isDamageableItem() && itemstack.isValidRepairItem(itemstack2);
+            //?}
 
             if (repairsWithInput) {
                 int l2 = Math.min(itemstack1.getDamageValue(), itemstack1.getMaxDamage() / 4);
@@ -631,10 +631,10 @@ public abstract class MixinAnvilMenu {
 
         // Vanilla dropped the "book enchantable" guard after 1.20.1; NeoForge kept it until 1.21.1.
         //? if neoforge && <1.21.2 {
-        if (flag && !itemstack1.isBookEnchantable(itemstack2)) {
+        /*if (flag && !itemstack1.isBookEnchantable(itemstack2)) {
             itemstack1 = ItemStack.EMPTY;
         }
-        //?}
+        *///?}
 
         this.cost.set(i);
         if (i <= 0) {
@@ -661,24 +661,24 @@ public abstract class MixinAnvilMenu {
     @Unique
     private boolean fairExperience$hasInfiniteMaterials() {
         //? if <1.21.2 {
-        return fairExperience$player().getAbilities().instabuild;
-        //?} else {
-        /*return fairExperience$player().hasInfiniteMaterials();
-        *///?}
+        /*return fairExperience$player().getAbilities().instabuild;
+        *///?} else {
+        return fairExperience$player().hasInfiniteMaterials();
+        //?}
     }
 
     @Unique
     private static boolean fairExperience$supports(ItemStack stack, net.minecraft.core.Holder<Enchantment> holder) {
         //? if neoforge {
-        return stack.supportsEnchantment(holder);
-        //?} else {
-        /*return holder.value().canEnchant(stack);
-        *///?}
+        /*return stack.supportsEnchantment(holder);
+        *///?} else {
+        return holder.value().canEnchant(stack);
+        //?}
     }
 
     //? if >=1.21.2 && neoforge {
-    @ModifyConstant(method = "createResultInternal", constant = @Constant(intValue = 40, ordinal = 2))
-    //?} else {
+    /*@ModifyConstant(method = "createResultInternal", constant = @Constant(intValue = 40, ordinal = 2))
+    *///?} else {
     @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
     //?}
     private int fairExperience$modifyMaxCostVanilla(int constant) {
@@ -691,11 +691,11 @@ public abstract class MixinAnvilMenu {
      * anvils enabled never accumulates an ever-growing repair cost.
      */
     //? if >=1.21.2 && neoforge {
-    @WrapOperation(
+    /*@WrapOperation(
         method = "createResultInternal",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I")
     )
-    //?} else {
+    *///?} else {
     @WrapOperation(
         method = "createResult",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I")
