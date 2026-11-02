@@ -359,7 +359,7 @@ public abstract class MixinAnvilMenu {
         fairExperience$broadcastChanges();
     }
 
-    @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
+    @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2), require = 0)
     private int fairExperience$modifyMaxCostVanilla(int constant) {
         return FairExperienceConfig.removeTooExpensiveLimit ? Integer.MAX_VALUE : constant;
     }
@@ -677,9 +677,9 @@ public abstract class MixinAnvilMenu {
     }
 
     //? if >=1.21.2 && neoforge {
-    /*@ModifyConstant(method = "createResultInternal", constant = @Constant(intValue = 40, ordinal = 2))
+    /*@ModifyConstant(method = "createResultInternal", constant = @Constant(intValue = 40, ordinal = 2), require = 0)
     *///?} else {
-    @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
+    @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2), require = 0)
     //?}
     private int fairExperience$modifyMaxCostVanilla(int constant) {
         return FairExperienceConfig.removeTooExpensiveLimit ? Integer.MAX_VALUE : constant;
@@ -693,12 +693,14 @@ public abstract class MixinAnvilMenu {
     //? if >=1.21.2 && neoforge {
     /*@WrapOperation(
         method = "createResultInternal",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I")
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I"),
+        require = 0
     )
     *///?} else {
     @WrapOperation(
         method = "createResult",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I")
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;calculateIncreasedRepairCost(I)I"),
+        require = 0
     )
     //?}
     private int fairExperience$noPriorWorkPenalty(int repairCost, Operation<Integer> original) {

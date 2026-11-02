@@ -15,7 +15,8 @@ public abstract class MixinAnvilScreen {
 
     @ModifyConstant(
         method = "renderLabels",
-        constant = @Constant(intValue = 40)
+        constant = @Constant(intValue = 40),
+        require = 0
     )
     private int fairExperience$modifyMaxAnvilCost(int constant) {
         if (FairExperienceConfig.removeTooExpensiveLimit) {
