@@ -1,3 +1,9 @@
+> [!WARNING]
+> ### PROJECT UNMAINTAINED / ON INDEFINITE HIATUS — INCOMPLETE PORT
+> **Notice: This port is incomplete, non-functional, and not fully ported.**
+> Development has ceased and this project is on indefinite hiatus. No future updates, fixes, or stabilization patches are planned.
+
+
 [![Support my work](https://img.shields.io/badge/Support_my_work-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/S2X12424XK)
 [![Modrinth](https://img.shields.io/badge/Modrinth-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/fair-experience)
 [![CurseForge](https://img.shields.io/badge/CurseForge-F44336?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/fair-experience)
