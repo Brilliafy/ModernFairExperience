@@ -1,7 +1,7 @@
 package com.brilliafy.fairexperience;
 
 //? if neoforge {
-import net.neoforged.bus.api.IEventBus;
+/*import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 
@@ -20,4 +20,4 @@ public class FairExperienceNeoForge {
         );
     }
 }
-//?}
+*///?}

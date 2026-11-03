@@ -39,6 +39,7 @@ stonecutter {
         }
 
         match("1.20.1", "fabric", "forge")
+        version("1.20.1-neoforge", "1.20.1").buildscript("build.neoforge120.gradle.kts")
         match("1.21.1", "fabric", "neoforge")
         match("26.3", "fabric", "neoforge")
 

@@ -1,7 +1,7 @@
 package com.brilliafy.fairexperience;
 
 //? if forge {
-import net.minecraftforge.fml.ModList;
+/*import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -25,4 +25,4 @@ public class FairExperienceForge {
         );
     }
 }
-//?}
+*///?}

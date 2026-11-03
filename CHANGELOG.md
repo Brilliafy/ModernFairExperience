@@ -6,10 +6,10 @@ Multi-version, multi-loader rewrite (Fabric + NeoForge + Forge from one Stonecut
 
 ### Supported versions
 
-- Minecraft 26.3 – Fabric, NeoForge
-- Minecraft 1.21.1 – Fabric, NeoForge
-- Minecraft 1.20.1 – Fabric, Forge
-- Minecraft 1.16.5 – Forge (on the `1.16.5` branch of `Brilliafy/fairexperience`)
+- Minecraft 26.3 - Fabric, NeoForge
+- Minecraft 1.21.1 - Fabric, NeoForge
+- Minecraft 1.20.1 - Fabric, Forge
+- Minecraft 1.16.5 - Forge (on the `1.16.5` branch of `Brilliafy/fairexperience`)
 
 ### Features
 

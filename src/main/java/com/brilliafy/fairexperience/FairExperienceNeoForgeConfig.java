@@ -1,14 +1,14 @@
 package com.brilliafy.fairexperience;
 
 //? if neoforge {
-import net.neoforged.fml.ModContainer;
+/*import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-/**
+/^*
  * NeoForge config backend (TOML, {@code config/fairexperience-common.toml}).
- */
+ ^/
 public final class FairExperienceNeoForgeConfig {
 
     public static final ModConfigSpec SPEC;
@@ -58,10 +58,10 @@ public final class FairExperienceNeoForgeConfig {
 
     public static void register(ModContainer modContainer) {
         //? if <1.21.2 {
-        modContainer.registerConfig(ModConfig.Type.COMMON, SPEC);
-        //?} else {
-        /*modContainer.registerConfig(ModConfig.Type.STARTUP, SPEC);
-        *///?}
+        /^modContainer.registerConfig(ModConfig.Type.COMMON, SPEC);
+        ^///?} else {
+        modContainer.registerConfig(ModConfig.Type.STARTUP, SPEC);
+        //?}
     }
 
     public static void onConfigEvent(ModConfigEvent event) {
@@ -79,4 +79,4 @@ public final class FairExperienceNeoForgeConfig {
         FairExperienceConfig.debugLogging = DEBUG_LOGGING.get();
     }
 }
-//?}
+*///?}

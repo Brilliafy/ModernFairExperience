@@ -1,3 +1,9 @@
+> [!WARNING]
+> ### PROJECT UNMAINTAINED / ON INDEFINITE HIATUS — INCOMPLETE PORT
+> **Notice: This port is incomplete, non-functional, and not fully ported.**
+> Development has ceased and this project is on indefinite hiatus. No future updates, fixes, or stabilization patches are planned.
+
+
 [![Support my work](https://img.shields.io/badge/Support_my_work-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/S2X12424XK)
 [![Modrinth](https://img.shields.io/badge/Modrinth-00AF5C?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/fair-experience)
 [![CurseForge](https://img.shields.io/badge/CurseForge-F44336?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/fair-experience)
@@ -20,23 +26,23 @@ that repository's `1.16.5` branch (ForgeGradle 5, Java 8).
 
 | Minecraft | Fabric | NeoForge | Forge |
 | :-- | :--: | :--: | :--: |
-| 26.3 | ✅ | ✅ | – |
-| 1.21.1 | ✅ | ✅ | – |
-| 1.20.1 | ✅ | – | ✅ |
-| 1.16.5 | – | – | ✅ (legacy branch) |
+| 26.3 | ✅ | ✅ | - |
+| 1.21.1 | ✅ | ✅ | - |
+| 1.20.1 | ✅ | - | ✅ |
+| 1.16.5 | - | - | ✅ (legacy branch) |
 
 Seven jars per release (six from this repo, one from the 1.16.5 branch), all produced from a single
 Stonecutter build.
 
 ## Features
 
-- **Fair Enchanting** – subtracts the raw XP value of the enchantment requirement instead of flat levels.
-- **Fair Anvils** – converts anvil level costs to fair raw XP, saving high-level players from huge penalties.
-- **Fair Anvil Combining** – removes the Prior Work Penalty and order dependency. Combining books or
+- **Fair Enchanting** - subtracts the raw XP value of the enchantment requirement instead of flat levels.
+- **Fair Anvils** - converts anvil level costs to fair raw XP, saving high-level players from huge penalties.
+- **Fair Anvil Combining** - removes the Prior Work Penalty and order dependency. Combining books or
   applying them in any order always costs the same, and books upgraded by combining cost exactly the
   same to apply as raw books from villagers or creative mode.
-- **Configurable 40-level limit** – removes vanilla's "Too Expensive!" anvil cap by default.
-- **Mod compatibility** – works with modded enchanting tables (Apotheosis and friends), modded anvils
+- **Configurable 40-level limit** - removes vanilla's "Too Expensive!" anvil cap by default.
+- **Mod compatibility** - works with modded enchanting tables (Apotheosis and friends), modded anvils
   and mods that modify levels directly.
 
 The fair anvil cost model is a potential function:
@@ -103,7 +109,7 @@ Version and loader specific settings live in `stonecutter.properties.toml`. Shar
   (`stonecutter-template-multiloader` layout).
 - [MultiLoader-Template](https://github.com/jaredlll08/MultiLoader-Template) style loader split
   (common code + Fabric / NeoForge / Forge entry points).
-- [MixinExtras](https://github.com/LlamaLad7/MixinExtras) – bundled via Jar-in-Jar on 1.20.1 Forge,
+- [MixinExtras](https://github.com/LlamaLad7/MixinExtras) - bundled via Jar-in-Jar on 1.20.1 Forge,
   provided by Fabric Loader and NeoForge elsewhere. Used for `@WrapOperation` prior-work-penalty removal.
 - [Parchment](https://parchmentmc.org/) mappings for readable parameter names where available.
 - [mod-publish-plugin](https://github.com/modmuss50/mod-publish-plugin) for Modrinth/CurseForge releases.
